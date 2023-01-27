@@ -71,7 +71,9 @@ plots.ext <- list.files(file.path(sfdir, 'Kueppers_EastRiver_Plot_Shapefiles_WGS
 
 # Ingest cored aspen coordinates
 aspen <- read.csv(file.path(potrdir, 'aspen data site-level processed 30 Mar 2020.csv'))
-View(aspen)
+aspen.cored <- read.csv(file.path(potrdir, 'aspen dendro 2021 - completed sites.csv'))
+aspen <- merge(aspen, aspen.cored, by='Site_Code', all=T)
+aspen <- aspen[!is.na(aspen$Date.Completed),]
 aspen.coords <- data.frame(Site_Code=aspen$Site_Code, Longitude=aspen$Longitude, Latitude=aspen$Latitude)
 aspen.coords <- na.omit(aspen.coords)
 
@@ -92,7 +94,10 @@ zon.kplots <- zonals(coords.ext, rasdir, topo.factors, type='coord', radius=20)
 # Write out topo stats to csv
 write.csv(zon.kplots, '~/Desktop/kueppers_plots_zonals.csv')
 
-# Compute topo statistics for aspen plots
+# Compute topo statistics for all cored aspen plots
+zon.asp <- zonals(aspen.coords, rasdir, topo.factors, type='coord', radius=10)
+
+# Compute topo statistics for target SF aspen plots
 zon.asp <- zonals(aspen.coords, rasdir, topo.factors, type = 'coord', radius = 10)
 aspen.coords[aspsites,]
 aspsites <- which(aspen.coords$Site_Code %in% c('ACGNT01',
