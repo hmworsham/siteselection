@@ -37,9 +37,19 @@ sfdir <- file.path(erdir, 'RMBL-East River Watershed Forest Data', 'Data')
 
 # # Ingest DEM raster
 dem <- rast(file.path(rasdir, 'DEM', 'USGS_13_n39-40_w107-108_mosaic_wgs84utm13n.tif'))
-dem1000 <- aggregate(dem, fact=100)
-dem100 <- aggregate(dem, fact=10)
-dem30 <- aggregate(dem, fact=3)
+dem1000 <- change.res(dem, targ.res=1000, method='median')
+dem100 <- change.res(dem, targ.res=100, method='median')
+dem30 <- change.res(dem, targ.res=30, method='median')
+ext(dem30)
+bb <- ext(dem30)/10
+plot(dem30)
+plot(bb, add=T)
+crb <- crop(dem30, bb)
+plot(crb)
+crb <- crb*1
+setwd('./topographer')
+
+usethis::use_data(crb, overwrite=T)
 
 writeRaster(dem1000, file.path(rasdir, 'DEM', 'usgs_dem_1km.tif'))
 writeRaster(dem100, file.path(rasdir, 'DEM', 'usgs_dem_100m.tif'))
@@ -82,17 +92,17 @@ names(thl) <- 'usgs_heatload_100m'
 writeRaster(thl, file.path(rasdir, 'Heat_Load', 'usgs_heatload_100m.tif'), overwrite=T)
 
 # Curvature
-curvature <- spatialEco::curvature(dem, type = c('total', 'bolstad'))
+curvature <- curvature(dem, type = c('total', 'bolstad'))
 writeRaster(curvature, file.path(rasdir, 'usgs_curvature_10m.tif'))
 curvature <- NULL
 
 # TPI
-tpi_1000 <- spatialEco::tpi(dem100, scale = 9, win = 'rectangle', normalize = T)
+tpi_1000 <- tpi(dem100, scale = 9, win = 'rectangle', normalize = T)
 tpi_1000 <- disaggregate(tpi_1000, fact=10)
 writeRaster(tpi_1000, file.path(rasdir, 'TPI', 'usgs_tpi_1km.tif'), overwrite = T)
 tpi_1000 <- NULL
 
-tpi_2000 <- spatialEco::tpi(dem100, scale = 19, win = 'rectangle', normalize = T)
+tpi_2000 <- tpi(dem100, scale = 19, win = 'rectangle', normalize = T)
 tpi_2000 <- disaggregate(tpi_2000, fact=10)
 writeRaster(tpi_2000, file.path(rasdir, 'TPI', 'usgs_tpi_2km.tif'))
 tpi_2000 <- NULL
@@ -104,7 +114,6 @@ twi_100 <- disaggregate(twi_100, fact = 10)
 writeRaster(twi_100, file.path(rasdir, 'TWI', 'usgs_twi_100m.tif'), overwrite = T)
 twi_100 <- NULL
 plot(rast(file.path(rasdir, 'TWI', 'usgs_twi_100m.tif')))
-
 
 topmod <- dynatopmodel::build_layers(raster(dem100), fill.sinks = T)
 twi_100 <- topmod[[3]]
