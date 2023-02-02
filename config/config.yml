@@ -1,0 +1,20 @@
+# siteselection_config.yml
+
+default:
+ key1: default
+ pkgs: 
+  - googledrive
+  - readxl
+  - topographer
+  - terra
+ dem: 'USGS_13_n39-40_w107-108_mosaic_wgs84utm13n.tif'
+ out_raw: './data/raw'
+ out_int: './data/intermediate'
+ out_pro: './data/processed'
+
+test:
+  key1: test
+
+production:
+  key1: production
+
