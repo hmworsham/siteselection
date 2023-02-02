@@ -1,3 +1,9 @@
+# Create rasters
+# Description: Creates rasters for a bunch of topographic variables from an input DEM
+# Author: Marshall Worsham
+# Created: 10-06-20
+# Revised: 02-02-23
+
 # Ingest config
 config <- config::get(file=file.path('config', 'config.yml'))
 
