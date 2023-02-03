@@ -82,7 +82,7 @@ writeRaster(curv100, file.path(config$dat_int, 'usgs_curvature_100m.tif'), overw
 tpi1000 <- tpi(dem100, scale = 9, win = 'rectangle', normalize = T)
 names(tpi1000) <- 'tpi_1000m'
 #tpi1000<- change.res(tpi_1000, targ.res=100, method='bilinear')
-writeRaster(tpi_1000, file.path(config$dat_int, 'usgs_tpi_1000m.tif'), overwrite = T)
+writeRaster(tpi1000, file.path(config$dat_int, 'usgs_tpi_1000m.tif'), overwrite = T)
 
 tpi2000 <- tpi(dem100, scale = 19, win = 'rectangle', normalize = T)
 names(tpi2000) <- 'tpi_2000m'
