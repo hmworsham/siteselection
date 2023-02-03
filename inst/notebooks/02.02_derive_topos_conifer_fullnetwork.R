@@ -1,4 +1,4 @@
-# Derive topo files for conifer plots
+# Derive topo values for final network of conifer plots
 # Calculates the values of various topographic factors for rectangular 40x40 m neighborhoods around specified coordinates and/or within the extents of forest inventory plots in the East River watershed.
 # Author: Marshall Worsham
 # Created: 10-06-20
@@ -39,4 +39,4 @@ topo.rasters <- lapply(topo.rasters, rast)
 conifer.zonals <- zonals(coords.ext, topo.rasters, type='coord', radius=20, shape='rectangle')
 
 # Write out topo stats to csv
-write.csv(conifer.zonals, file.path(config$dat_pro, 'conifer_zonals_2022.csv'))
+write.csv(conifer.zonals, file.path(config$dat_pro, 'conifer_zonals_fullnetwork.csv'))
