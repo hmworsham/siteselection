@@ -1,21 +1,17 @@
 # Kueppers_Plot_GeophysGradient_Distribution
-# Generates figures to depict the distribution of Kueppers et al. East River forest inventory plots along several geophysical gradients
+# Generates figures to depict the distribution of Kueppers et al. East River conifer forest inventory plots along several geophysical gradients
 
 # Author: Marshall Worsham
 # Created: 10-06-20
-# Revised: 06-29-21
+# Revised: 02-03-23
 
-#############################
-# Set up workspace
-#############################
+# Load config
+config <- config::get(file=file.path('config', 'config.yml'))
 
-# Function to install new packages if they're not already installed
-load.pkgs <- function(pkg){
-  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-  if (length(new.pkg))
-    install.packages(new.pkg, dependencies = TRUE)
-  sapply(pkg, require, character.only = TRUE)
-}
+# Load packages and local functions
+devtools::load_all()
+load.pkgs(config$pkgs)
+
 
 # Name packages to install
 pkgs <- c(
@@ -25,32 +21,12 @@ pkgs <- c(
   'ggpubr',
   'googledrive',
   'readxl',
-  'tidyverse', 
+  'tidyverse',
   'mrmoose')
 
-# Run the function on the list of packages defined in pkgs
-load.pkgs(pkgs)
-
-# Source helper functions
-source(file.path(dirname(rstudioapi::getSourceEditorContext()$path), 'ss.helpers.R'))
-
-# Define directories
-erdir <- file.path('/Volumes', 'GoogleDrive', 'My Drive', 'Research', 'RMBL')
-fidir <- file.path(erdir, 'Working_Files', 'Forest_Inventory_Dataset')
-wsdir <- file.path(erdir, 'Working_Files', 'Watershed_Spatial_Dataset')
-rasdir <- file.path(erdir, 'RMBL-East River Watershed Forest Data', 'Data', 'Geospatial', 'Worsham_SiteSelection', '2021_Analysis_Layers', 'USGS_1-9_arcsec_DEM')
-sfdir <- file.path(erdir, 'RMBL-East River Watershed Forest Data', 'Data', 'Geospatial')
-potrdir <- file.path(erdir, 'RMBL-East River Watershed Forest Data', 'Data', 'Geospatial', 'Blonder_Aspen_Plots_2020')
-
-#############################
-# Ingest source data
-#############################
-
 # Ingest 2020 Kueppers plot characteristics CSVs
-tmpfile <- tempfile()
-tmpfile <- drive_download('Kueppers_EastRiver_Site_Index', 
-                          tmpfile)$local_path
-siteinfo.21 <- read_excel(tmpfile)
+tmpfile <- drive_download('Kueppers_EastRiver_Site_Index', tempfile())$local_path
+siteinfo <- read_excel(tmpfile)
 siteinfo.21$Established <- 'Established'
 siteinfo.21$RMBL_Approved <- as.character(siteinfo.21$RMBL_Approved)
 
@@ -88,7 +64,7 @@ topos <- as.data.frame(topos)
 outs <- NA
 #outs <- c()
 
-# Specify which plots are in 
+# Specify which plots are in
 # ins <- c(topos[topos$Established == 'Established', 'Location_ID'],
 #          'SG-NWS1',
 #          'ER-BME3',
@@ -121,7 +97,7 @@ topos_cut[topos_cut$Location_ID %in% c('CC-CVS1',
                                        'ER-APU1',
                                        'ER-BME1',
                                        'ER-GT1',
-                                       'SG-NES1', 
+                                       'SG-NES1',
                                        'SG-SWR1',
                                        'SR-PVG1',
                                        'XX-CAR3',
@@ -146,8 +122,8 @@ topos_cut[topos_cut$Location_ID %in% c('CC-CVS1',
                                        'XX-PLN2'), 'Coring'] <- 'Cored'
 
 topos_cut[topos_cut$Location_ID %in% c('CC-CVS1',
-                                       'ER-APU1', 
-                                       'SG-NES1', 
+                                       'ER-APU1',
+                                       'SG-NES1',
                                        'SR-PVG1',
                                        'CC-EMN1'), 'Coring'] <- 'Proposed'
 
@@ -172,7 +148,7 @@ print.figs(topos_aop, outdir)
 # Specify vars to include
 topos.no <- c('Aspect',
               'Southness_205',
-              'TWI_1000', 
+              'TWI_1000',
               'TPI_2000')
 kplots <- topos_cut[,!names(topos_cut) %in% topos.no]
 
@@ -191,15 +167,15 @@ varsgrid <- ggplot(kplots_long, aes(x = order, y = value)) +
   #scale_fill_manual(values=unname(icolors('mario'))) +
   #scale_alpha_discrete(range = c(1, 0.2)) +
   scale_x_continuous(
-    breaks = kplots_long$order, 
+    breaks = kplots_long$order,
     labels = kplots_long$Location_ID) +
   geom_smooth(method = "lm", se=FALSE, color='black') +
   stat_regline_equation(aes(label=paste(..eq.label.., ..rr.label.., sep = "~~~~"))) +
   facet_wrap(~variable, scales = 'free') +
   guides(color='none', fill='none', size='none') +
-  labs(x='Site', y='Value') + 
+  labs(x='Site', y='Value') +
   theme(
-    axis.text.x = element_text(size=9, angle=90, hjust=0.95, vjust=0.2), 
+    axis.text.x = element_text(size=9, angle=90, hjust=0.95, vjust=0.2),
     axis.title = element_text())
 
 # Print facet grid
