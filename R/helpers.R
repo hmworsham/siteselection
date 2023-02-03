@@ -6,6 +6,7 @@ load.pkgs <- function(pkg){
   sapply(pkg, require, character.only = TRUE)
 }
 
+
 # Function to make polygons
 makepolys <- function(input, radius, shape='rectangle', target.crs=32613){
   xy = input[,c(2,3)]
@@ -20,13 +21,14 @@ makepolys <- function(input, radius, shape='rectangle', target.crs=32613){
   return(sites)
 }
 
-# Function to print figures
+
+#' Print figures
+#' @description Generates figures with ggplot and writes to png
+#' @param df Dataframe object. Input dataframe for plotting
+#' @param outdir Character string. Destination directory for writing png
+#' @return NULL. Writes to file
+
 print.figs <- function(df, outdir){
-  #'''
-  # Function
-  # Input: a dataframe of sites and topographic variables
-  # Returns: a set of png files
-  #'''
 
   # Define colors
   colors = c("#3B9AB2",
