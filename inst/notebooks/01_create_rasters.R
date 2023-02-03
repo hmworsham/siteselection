@@ -4,7 +4,7 @@
 # Created: 10-06-20
 # Revised: 02-02-23
 
-# Ingest config
+# Load config
 config <- config::get(file=file.path('config', 'config.yml'))
 
 # Load packages and local functions
