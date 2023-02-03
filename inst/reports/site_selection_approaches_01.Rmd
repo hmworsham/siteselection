@@ -1,0 +1,68 @@
+---
+title: |
+  **Site selection approaches for Kueppers et al. sites in the East River**
+author:
+- H. M. Worsham, Energy and Resources Group, University of California, Berkeley
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  word_document: 
+    reference_docx: docx_template.docx
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    latex_engine: pdflatex
+  html_document:
+    df_print: paged
+fontfamily: mathpazo
+fontsize: 11pt
+geometry: margin = 1in
+header-includes:
+- \usepackage{setspace}\doublespacing
+- \usepackage[left]{lineno}
+- \linenumbers
+- \usepackage{dcolumn}
+- \usepackage{caption}
+- \usepackage{float}
+- \usepackage{afterpage}
+- \usepackage{siunitx}
+- \usepackage{amsmath}
+keywords: forest structure, forest ecology, watershed function, drought
+#bibliography: './inst/reports/library.bib'
+#link-citations: yes
+#linkcolor: blue
+#csl: './inst/reports/nature-conservation.csl'
+--- 
+
+# Introduction
+## Subsection level 1
+### Subsection level 2
+#### Subsection level 3
+
+[@Hemberger.2020]
+
+# Methods
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+# Results
+## Subsection level 1
+### Subsection level 2
+#### Subsection level 3
+
+# Discussion
+## Subsection level 1
+### Subsection level 2
+#### Subsection level 3
+
+# Figures
+\newpage
+![](../ms_figs/fig_s2.png){ width=100% }
+**Figure S2:** Interaction plots for other study species. Each line represents the expected trend (with 95% confidence interval) of probability of occurrence over time in a county given: a value of proportion cropland (panel columns: mean ± 1 standard deviation) and number of crops (line color and type: mean ± 1 standard deviation) in that county.
+\clearpage
+
+![Image legend](path/to/image.png)
+
+# References
+

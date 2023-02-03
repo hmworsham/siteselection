@@ -1,0 +1,25 @@
+# siteselection_config.yml
+
+default:
+ key1: default
+ pkgs:
+  - tidyverse
+  - googledrive
+  - ggplot2
+  - readxl
+  - sf
+  - topographer
+  - terra
+ dem: 'USGS_13_n39-40_w107-108_mosaic_wgs84utm13n.tif'
+ siteindex: 'Kueppers_EastRiver_Site_Index'
+ siteinfo21: 'EastRiver_Proposed_Sites_2021_25.csv'
+ dat_raw: './data/raw'
+ dat_int: './data/intermediate'
+ dat_pro: './data/processed'
+
+test:
+  key1: test
+
+production:
+  key1: production
+

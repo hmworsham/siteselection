@@ -1,23 +1,11 @@
 # EastRiver_Derive_Topos
 # Calculates the values of various topographic factors for rectangular 40x40 m neighborhoods around specified coordinates and/or within the extents of forest inventory plots in the East River watershed.
-
 # Author: Marshall Worsham
 # Created: 10-06-20
-# Revised: 07-11-21
-
-#############################
-# Set up workspace
-#############################
-# Function to install new packages if they're not already installed
-load.pkgs <- function(pkg){
-  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-  if (length(new.pkg))
-    install.packages(new.pkg, dependencies = TRUE)
-  sapply(pkg, require, character.only = TRUE)
-}
+# Revised: 02-02-23
 
 # List packages
-pkgs <- c('data.table', 
+pkgs <- c('data.table',
           'dplyr',
           'ggplot2',
           'googledrive',
@@ -26,31 +14,22 @@ pkgs <- c('data.table',
           'terra',
           'tidyverse')
 
-# Run load on the list of packages named in pkgs
-load.pkgs(pkgs)
+# Load config
+config <- config::get(file=file.path('config', 'config.yml'))
 
-# Source helper functions
-source(file.path(dirname(rstudioapi::getSourceEditorContext()$path), 'ss.helpers.R'))
+# Load packages and local functions
+devtools::load_all()
+load.pkgs(config$pkgs)
 
-# Set working directory.
-erdir <- file.path('/Volumes', 'GoogleDrive', 'My Drive', 'Research', 'RMBL', fsep='/')
-fidir <- file.path(erdir, 'Working_Files', 'Forest_Inventory_Dataset', 'Output', fsep = '/')
-wsdir <- file.path(erdir, 'Working_Files', 'Watershed_Spatial_Dataset', 'Output', fsep = '/')
-rasdir <- file.path(erdir, 'RMBL-East River Watershed Forest Data', 'Data', 'Geospatial', 'Worsham_SiteSelection', '2021_Analysis_Layers', 'USGS_1-9_arcsec_DEM')
-sfdir <- file.path(erdir, 'RMBL-East River Watershed Forest Data', 'Data', 'Geospatial')
-potrdir <- file.path(erdir, 'RMBL-East River Watershed Forest Data', 'Data', 'Geospatial', 'Blonder_Aspen_Plots_2020')
-berkdir <- file.path(erdir, 'RMBL-East River Watershed Forest Data', 'Data', 'Geospatial', 'Berkelhammer_Still_Sapflux_Sites_2021')
 
-#############################
-# Ingest data
-#############################
-topo.factors <- c('Aspect', 
+#
+topo.factors <- c('Aspect',
                   'Curvature',
                   'DTM',
                   'DEM',
                   'Heat_Load',
-                  'Slope', 
-                  'TPI', 
+                  'Slope',
+                  'TPI',
                   'TWI')
 
 # Ingest 2020 Kueppers plot characteristics CSVs
@@ -149,8 +128,8 @@ allcoords <- rbind(coords.ext, coords.22)
 # Create sets of 'good' and 'bad' sites for inclusion/exclusion
 # goodsites <- c() # Use if good sites list is short
 badsites <- c('Ute Gulch 2',
-              'Baldy Mountain east 4', 
-              'Snodgrass NW slope 2', 
+              'Baldy Mountain east 4',
+              'Snodgrass NW slope 2',
               'Emerald 1',
               'Cement Creek 28')
 goodsites <- coords.22[!coords.22$Location_ID %in% badsites, 'Location_ID']
@@ -163,9 +142,9 @@ rownames(submitcoords) <- seq(1, nrow(submitcoords))
 
 # Write coordinates to CSV
 write.csv(
-  submitcoords, 
+  submitcoords,
   file.path(
-    fidir, 
+    fidir,
     'EastRiver_Proposed_Coordinates_2022_10.csv')
   )
 
@@ -180,29 +159,29 @@ submitpolys.sf$Location_ID <- goodsites
 
 # Write polygons to shp
 st_write(
-  submitpolys, 
-  file.path(sfdir, 
-            'Worsham_2021_SiteSelection', 
-            '2022_Proposed_Sites', 
-            'Kueppers_EastRiver_Proposed_Sites_2022_10'), 
+  submitpolys,
+  file.path(sfdir,
+            'Worsham_2021_SiteSelection',
+            '2022_Proposed_Sites',
+            'Kueppers_EastRiver_Proposed_Sites_2022_10'),
   driver="ESRI Shapefile", append=F)
 
 # Check that shp is readable and plot
 plot(
   rast(
     list.files(
-      rasdir, 
-      recursive=T, 
-      full.names=T)[12]), 
+      rasdir,
+      recursive=T,
+      full.names=T)[12]),
   col=gray.colors(12))
 
 plot(st_read(
   file.path(
-    sfdir, 
-    'Worsham_2021_SiteSelection', 
-    '2022_Proposed_Sites', 
+    sfdir,
+    'Worsham_2021_SiteSelection',
+    '2022_Proposed_Sites',
     'Kueppers_EastRiver_Proposed_Sites_2022_10')),
-  lwd=6, 
-  border=magma(10), 
+  lwd=6,
+  border=magma(10),
   add=T)
 
