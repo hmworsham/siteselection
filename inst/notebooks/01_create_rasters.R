@@ -12,7 +12,7 @@ devtools::load_all()
 load.pkgs(config$pkgs)
 
 # Ingest DEM from Google Drive storage
-dem.tmp <- drive_download(config$dem, tempfile())$local_path
+dem.tmp <- drive_download(as_id(config$extdata$dem), tempfile())$local_path
 dem <- rast(dem.tmp)
 names(dem) <- 'dem_10m'
 
