@@ -17,7 +17,7 @@ asp <- read.csv(asp)
 head(asp)
 
 # Ingest cored aspen info
-asp.cored <- drive_download(as_id(config$aspcored), tempfile())$local_path
+asp.cored <- drive_download(as_id(config$extdata$aspcored), tempfile())$local_path
 asp.cored <- read.csv(asp.cored)
 head(asp.cored)
 
