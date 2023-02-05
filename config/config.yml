@@ -10,9 +10,13 @@ default:
   - sf
   - topographer
   - terra
- dem: 'USGS_13_n39-40_w107-108_mosaic_wgs84utm13n.tif'
- siteindex: 'Kueppers_EastRiver_Site_Index'
- siteinfo21: 'EastRiver_Proposed_Sites_2021_25.csv'
+ extdata:  
+   dem: '1sDKyVFypWFk0BbTe43PTuDv007XycZ23'
+   siteindex: '1KPpaiTZSfrq0RYMJQwNdwgCU-4rWucheW5KUN_maERs'
+   siteinfo21: 'EastRiver_Proposed_Sites_2021_25.csv'
+   siteinfo22: 'EastRiver_Proposed_Sites_2022_10.csv'
+   asp: '1C3QE-8xK2XGTE4TvGejMyu68D-QVvx85'
+   aspcored: '1gxg1yOuD7qdMK5hKnk__vWobZ0zdsRz6'
  dat_raw: './data/raw'
  dat_int: './data/intermediate'
  dat_pro: './data/processed'
