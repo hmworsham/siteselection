@@ -12,7 +12,7 @@ devtools::load_all()
 load.pkgs(config$pkgs)
 
 # Ingest index with extant conifer plot characteristics
-tmpfile <- drive_download('Kueppers_EastRiver_Site_Index', tempfile())$local_path
+tmpfile <- drive_download(as_id(config$extdata$siteindex), tempfile())$local_path
 siteinfo.ext <- as.data.frame(read_excel(tmpfile))
 coords.ext <- siteinfo.ext[,c('Location_ID', 'Latitude', 'Longitude')]
 

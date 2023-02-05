@@ -14,11 +14,11 @@ load.pkgs(config$pkgs)
 #### Ingest data ####
 
 # Ingest 2021 Kueppers plot characteristics CSVs
-tmpfile <- drive_download('Kueppers_EastRiver_Site_Index', tempfile())$local_path
+tmpfile <- drive_download(as_id(config$extdata$siteindex), tempfile())$local_path
 siteinfo.ext <- as.data.frame(read_excel(tmpfile))
 
 # Ingest 2022 proposed site info
-tmpfile <- drive_download('EastRiver_Proposed_Sites_2022_10.csv', tempfile())$local_path
+tmpfile <- drive_download(config$extdata$siteinfo22, tempfile())$local_path
 siteinfo.22 <- read.csv(tmpfile, header=T)
 
 #### Process and clean data ####
