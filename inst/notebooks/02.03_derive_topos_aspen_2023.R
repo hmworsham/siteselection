@@ -12,7 +12,7 @@ devtools::load_all()
 load.pkgs(config$pkgs)
 
 # Ingest aspen site info
-asp <- drive_download(as_id(config$asp), tempfile())$local_path
+asp <- drive_download(as_id(config$extdata$asp), tempfile())$local_path
 asp <- read.csv(asp)
 head(asp)
 
