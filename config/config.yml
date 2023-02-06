@@ -6,6 +6,7 @@ default:
   - tidyverse
   - googledrive
   - ggplot2
+  - ggpmisc
   - readxl
   - sf
   - topographer
