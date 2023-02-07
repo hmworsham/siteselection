@@ -33,7 +33,6 @@ topos <- siteinfo[c(
   'TWI_100',
   'TWI_1000',
   'TPI_1000',
-  'TPI_2000'
 )]
 
 # Make df of topo variables
@@ -54,7 +53,6 @@ topos <- as.data.frame(topos)
 # topos_aop <- topos[topos$Within_SDP_Boundary=='Yes',]
 
 #### Batch create plots for individual variables ####
-
 
 # Define colors
 colors = c("#3B9AB2",
@@ -101,41 +99,70 @@ kplots_long <- kplots_long %>%
   )))) %>%
   arrange(variable, value) %>%
   group_by(variable) %>%
-  mutate(Order = 1:25) %>%
+  mutate(Order = 1:25,
+         LIO = paste(Order, Location_ID, sep='_')) %>%
   ungroup()
 
+locids <- function(x) sub("[^_]*_","",x )
+
 # Set up facet grid with all variables
-varsgrid <- ggplot(kplots_long, aes(x = Order, y = value)) +
-  geom_point(aes(fill = Elevation, size=1), shape=21) +
-  scale_fill_viridis_c(name='Elevation') +
-  #scale_alpha_discrete(range = c(1, 0.2)) +
-  scale_x_continuous(
-    breaks = kplots_long$Order,
-    labels = kplots_long$Location_ID) +
-  geom_smooth(method = 'lm', se=FALSE, color='black') +
-  stat_poly_eq(aes(label = paste(after_stat(eq.label), sep = "~~~")),
-               label.x.npc = "right",
-               label.y.npc = 0.15,
-               eq.with.lhs = "italic(hat(y))~`=`~",
-               eq.x.rhs = "~italic(x)",
-               formula = y~x ,
-               parse = TRUE,
-               size = 3) +
-  stat_poly_eq(aes(label = paste(after_stat(rr.label), sep = "~~~")),
-               label.x.npc = "right",
-               label.y.npc = "bottom",
-               formula = y~x,
-               parse = TRUE,
-               size = 3) +
-  facet_wrap(~variable, scales = 'free') +
-  labs(x='Site', y='Value') +
-  guides(color='none', fill='none', size='none') +
+varsgrid <- ggplot(kplots_long, aes(x = reorder(LIO, Order), y = value)) +
+  geom_point(aes(fill = Elevation, size = 1), shape = 21) +
+  scale_fill_viridis_c(name = 'Elevation') +
+  scale_x_discrete(labels = locids) +
+  geom_smooth(
+    aes(x = Order, y = value),
+    method = 'lm',
+    se = FALSE,
+    color = 'black'
+  ) +
+  stat_poly_eq(
+    aes(
+      x = Order,
+      y = value,
+      label = paste(after_stat(eq.label), sep = "~~~")
+    ),
+    label.x.npc = "right",
+    label.y.npc = 0.15,
+    eq.with.lhs = "italic(hat(y))~`=`~",
+    eq.x.rhs = "~italic(x)",
+    formula = y ~ x,
+    parse = TRUE,
+    size = 3
+  ) +
+  stat_poly_eq(
+    aes(
+      x = Order,
+      y = value,
+      label = paste(after_stat(rr.label), sep = "~~~")
+    ),
+    label.x.npc = "right",
+    label.y.npc = "bottom",
+    formula = y ~ x,
+    parse = TRUE,
+    size = 3
+  ) +
+  facet_wrap( ~ variable, scales = 'free') +
+  labs(x = 'Site', y = 'Value') +
+  guides(color = 'none', fill = 'none', size = 'none') +
   theme(
-    axis.text.x = element_text(size=9, angle=90, hjust=1, vjust=0.5),
-    axis.title = element_text())
+    axis.text.x = element_text(
+      size = 9,
+      angle = 90,
+      hjust = 1,
+      vjust = 0.5
+    ),
+    axis.title = element_text()
+  )
 
 # Print facet grid
 varsgrid
-png(file.path(out.dir, 'topo_fg.png'))
+
+# Write to png
+png(
+  file.path(out.dir, 'topo_fg.png'),
+  width=2560,
+  height=1800,
+  res=300)
 print(varsgrid)
 dev.off()
