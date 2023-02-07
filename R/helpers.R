@@ -42,14 +42,14 @@ print.figs <- function(df,
   # Set topo variables
   df <- data.frame(
     Location_ID=df$Location_ID,
-    Factor_Var=df[,factor.var],
     df %>% select_if(is.numeric))
 
-  # Set factor column as factor and set name
-  df$Factor_Var <- factor(df$Factor_Var, levels=c('T','F'))
-  #names(df)[names(df)=='Factor_Var'] <- factor.var
+  if (!missing(factor.var)) {
+    df$Factor_Var <- df[,factor.var]
+    df$Factor_Var <- factor(df$Factor_Var, levels=c('T', 'F'))
+  }
 
-  # lapply
+  # Generate plot for each topo variable
   for (t in seq(3, length(df))) {
 
     # Define plot name for saving
@@ -88,7 +88,7 @@ print.figs <- function(df,
       # Smoothing, 1:1 line and equations
       geom_smooth(
         aes(
-          x=1:25,
+          x=1:nrow(df),
           y=df[order(df[,t]), names(df)[t]]),
         method = 'lm',
         formula= y~x,
@@ -102,7 +102,7 @@ print.figs <- function(df,
         linetype='dashed') +
       stat_poly_eq(
         aes(
-          x=1:25,
+          x=1:nrow(df),
           y=df[order(df[,t]), names(df)[t]],
           label = paste(after_stat(eq.label), sep = "~~~")),
         label.x.npc = "right",
@@ -114,7 +114,7 @@ print.figs <- function(df,
         size = 5) +
       stat_poly_eq(
         aes(
-          x=1:25,
+          x=1:nrow(df),
           y=df[order(df[,t]), names(df)[t]],
           label = paste(after_stat(rr.label), sep = "~~~")),
         label.x.npc = "right",
