@@ -73,26 +73,25 @@ print.figs(
 #### Facet grid all variables ####
 
 # Specify vars to include
-topos.no <- c('Aspect',
-              'Southness_205',
-              'TWI_1000',
-              'TPI_2000')
+topos.no <- c('aspect_100m',
+              'twi_1000m',
+              'tpi_2000m')
 kplots <- topos[,!names(topos) %in% topos.no]
 
 # Gather to long format
 kplots_long <- kplots %>%
-  pivot_longer(cols = Elevation_m:TPI_1000,
+  pivot_longer(cols = dem_100m:tpi_1000m,
                names_to = 'variable') %>%
   arrange(variable, Location_ID)
 kplots_long <- kplots_long %>%
   mutate(Elevation = as.numeric(
     flatten(
-      rep(kplots_long[kplots_long$variable == 'Elevation_m', 'value'],
+      rep(kplots_long[kplots_long$variable == 'dem_100m', 'value'],
           length(unique(kplots_long$variable))
   )))) %>%
   arrange(variable, value) %>%
   group_by(variable) %>%
-  mutate(Order = 1:25,
+  mutate(Order = 1:100,
          LIO = paste(Order, Location_ID, sep='_')) %>%
   ungroup()
 
