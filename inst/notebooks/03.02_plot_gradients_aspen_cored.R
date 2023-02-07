@@ -1,10 +1,10 @@
-# Plot geophysical gradient distribution
-# Generates figures to depict the distribution of conifer forest plots along
+# Plot gradients for aspen sites
+# Generates figures to depict the distribution of aspen forest plots along
 # defined geophysical gradients
 
 # Author: Marshall Worsham
 # Created: 10-06-20
-# Revised: 02-05-23
+# Revised: 02-06-23
 
 # Load config
 config <- config::get(file=file.path('config', 'config.yml'))
@@ -14,25 +14,20 @@ devtools::load_all()
 load.pkgs(config$pkgs)
 
 # Ingest 2020 Kueppers plot characteristics CSVs
-tmpfile <- drive_download(as_id(config$extdata$siteindex), tempfile())$local_path
-siteinfo <- read_excel(tmpfile)
+asp <- file.path(config$dat_pro, 'aspen_zonals_2023.csv')
+asp <- read.csv(asp, row.names=1)
 
 # Select variables of interest from 2021 site info
-topos <- siteinfo[c(
+topos <- asp[c(
   'Location_ID',
-  'Established',
-  'Within_SDP_Boundary',
-  'Sensors',
-  'Cored',
-  'Elevation_m',
-  'Slope',
-  'Aspect',
-  'Heat_Load',
-  'Folded_Aspect_205',
-  'Southness_205',
-  'TWI_100',
-  'TWI_1000',
-  'TPI_1000',
+  'dem_100m',
+  'slope_100m',
+  'aspect_100m',
+  'heatload_100m',
+  'usgs_205faspect_100m',
+  'twi_100m',
+  'twi_1000m',
+  'tpi_1000m'
 )]
 
 # Make df of topo variables
@@ -63,19 +58,17 @@ colors = c("#3B9AB2",
            "#F98400",
            "#4DA64D",
            "#DFB3F2",
-           "#EBCC2A",
-           "#2A2A2A")
+           "#EBCC2A")
 
 # Print figures to png
-out.dir <- file.path('inst', 'reports', 'figs')
+out.dir <- file.path('inst', 'reports', 'figs', 'aspen')
 print.figs(
   topos,
-  'Sensors',
+  col.on='dem_100m',
   pal=colors,
   outdir=out.dir,
   dims=c(2560,1920),
   reso=300)
-
 
 #### Facet grid all variables ####
 
