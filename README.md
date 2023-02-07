@@ -4,7 +4,7 @@
 The repository **siteselection** contains R functions, scripts, and notebooks used for site selection for ecological studies. The material was originally developed for state-factor type (Amundson and Jenny 1997) approaches to selecting forest demography plots in Colorado's East River watershed, though the functions are generalizable to other domains. The repo is structured as an R package for portability. Reproducing the enclosed analyses is simply a matter of installing the package, providing Google Auth credentials to access publicly accessible input data, and running the notebooks. 
 
 ## Installing
----
+
 **siteselection** can be installed by calling `remotes::install_github`:
 
 ```
@@ -12,7 +12,7 @@ remotes::install_github('hmworsham/siteselection')
 ```
 
 ## Directory tree
----
+
 The repository has the following structure:
 
 ``` nohighlight
@@ -55,8 +55,8 @@ The repository has the following structure:
 
 ## Functions
 
-| `siteselection` function     | Source                       | Description                                              |
-|:-----------------------------|:----------------------------------------------------------------------------------------|
+| `siteselection` function     | Source                       | Description                                               |
+|:-----------------------------|:-----------------------------|:----------------------------------------------------------|
 | `load.pkgs`                  | helpers.R                    | Load list of packages specified in config.yml, installing first if necessary  |
 | `makepolys`                  | helpers.R                    | Build rectangular or circular polygons of specified radius around specified coordinates  |
 | `print.figs`                 | helpers.R                    | Generate and write figures showing site distribution along geophysical gradients  |
