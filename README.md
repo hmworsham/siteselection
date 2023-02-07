@@ -31,7 +31,7 @@ The repository has the following structure:
 │	└── raw           <- original, immutable data dump
 ├── inst              <- directory of containing investigations and reportable output
 │	├── examples      <- contains preliminary investigations
-│	├── ms            <- 
+│	├── ms            <- .Rmd files for manuscripts and reports
 │	└── notebooks     <- .R and .Rmd files with number-ordered, sequential analyses
 ├── logs              <- modeling and analysis logs
 ├── man               <- documentation for functions exported from ./R
@@ -57,7 +57,7 @@ The repository has the following structure:
 
 | `siteselection` function     | Source                       | Description                                               |
 |:-----------------------------|:-----------------------------|:----------------------------------------------------------|
-| `load.pkgs`                  | helpers.R                    | Load list of packages specified in config.yml, installing first if necessary  |
-| `makepolys`                  | helpers.R                    | Build rectangular or circular polygons of specified radius around specified coordinates  |
-| `print.figs`                 | helpers.R                    | Generate and write figures showing site distribution along geophysical gradients  |
+| `load.pkgs`                  | ./R/helpers.R                | Load list of packages specified in `config.yml`, installing first if necessary  |
+| `makepolys`                  | ./R/helpers.R                | Build rectangular or circular polygons of specified radius around specified coordinates  |
+| `print.figs`                 | ./R/helpers.R                | Generate and write figures showing site distribution along geophysical gradients  |
 
