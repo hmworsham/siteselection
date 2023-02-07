@@ -1,7 +1,6 @@
 # Site selection
----
 
-The repository **siteselection** contains R functions, scripts, and notebooks used for site selection for ecological studies. The material was originally developed for state-factor type (Amundson and Jenny 1997) approaches to selecting forest demography plots in Colorado's East River watershed, though the functions are generalizable to other domains. The repo is structured as an R package for portability. Reproducing the enclosed analyses is simply a matter of installing the package, providing Google Auth credentials to access publicly accessible input data, and running the notebooks. 
+The repository **siteselection** contains R functions, scripts, and notebooks used for site selection for ecological studies. The material was originally developed for state-factor type (Amundson and Jenny 1997) approaches to choosing forest demography plots in Colorado's East River watershed, though the functions are generalizable to other domains. The repo is structured as an R package for portability. Reproducing the enclosed analyses is simply a matter of installing the package, providing Google Auth credentials to access publicly accessible input data, and running the notebooks. 
 
 ## Installing
 
@@ -10,6 +9,13 @@ The repository **siteselection** contains R functions, scripts, and notebooks us
 ```
 remotes::install_github('hmworsham/siteselection')
 ```
+
+## Reproducing analyses
+
+1. Optionally, open `siteselection.Rproj` in RStudio to spin up a contained workspace.
+2. Run `make ./Makefile` to ingest and clean data. Runs `./inst/notebooks/01_create_rasters`. 
+3. Enter Google Auth credentials when prompted. See [`drive_auth()`](https://googledrive.tidyverse.org/reference/drive_auth.html) documentation for details. 
+4. Run `R CMD BATCH ./inst/notebooks/<notebook.R>.` or, optionally, open notebooks from the directory in RStudio to run interactively. 
 
 ## Directory tree
 
@@ -50,8 +56,6 @@ The repository has the following structure:
 | 02.04_derive_topos_sapflux_proposed_2023.R        | TK  |
 | 03.01_plot_gradients_conifer_fullnetwork.R        | TK  |
 | 03.02_plot_gradients_aspen_cored.R                | TK  |
-
-
 
 ## Functions
 
