@@ -1,0 +1,69 @@
+---
+title: |
+  **your title goes here and the asterisks make it bold**
+author:
+  - Your name
+  - Coauthor_1
+  - Coauthor_2
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    latex_engine: pdflatex
+  word_document:
+    reference_docx: docx_template.docx # This you would need to create with the formatting of your choice.
+  html_document:
+    df_print: paged
+fontfamily: mathpazo
+fontsize: 11pt
+geometry: margin = 1in
+header-includes:
+- \usepackage{setspace}\doublespacing
+- \usepackage[left]{lineno}
+- \linenumbers
+- \usepackage{dcolumn}
+- \usepackage{caption}
+- \usepackage{float}
+- \usepackage{afterpage}
+- \usepackage{siunitx}
+- \usepackage{amsmath}
+keywords: Keywords, Keyword, Key word, Word key
+bibliography: ./library.bib # This file you create from your reference manager of choice
+csl: ./nature-conservation.csl # This can be changed to your citation style of choice
+abstract: |
+  Your abstract goes here. 
+---
+
+# Introduction
+
+# Methods
+## Submethods 1
+
+## Submethods 2
+
+# Results
+## Subresults 1
+
+## Subresults 2
+
+# Discussion
+## Conclusions
+
+# Acknowledgements
+\clearpage
+
+\newpage
+# Figures and Tables
+![](../ms_figs/fig_1.png){ width=100% }
+**Figure 1:** 
+\clearpage
+
+\newpage
+![](../ms_figs/fig_2.png){ width=100% }
+**Figure 2:** 
+\clearpage
+
+# Supplementary Materials
+
+# References
