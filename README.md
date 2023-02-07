@@ -65,3 +65,6 @@ The repository has the following structure:
 | `makepolys`                  | ./R/helpers.R                | Build rectangular or circular polygons of specified radius around specified coordinates  |
 | `print.figs`                 | ./R/helpers.R                | Generate and write figures showing site distribution along geophysical gradients  |
 
+## Getting help
+Bugs: Users are encouraged to report bugs directly in GitHub. Select **Issues** in the menu above, and create a **New issue** to start a new bug report, documentation correction, or feature request. Questions to worsham@berkeley.edu.
+
