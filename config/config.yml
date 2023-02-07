@@ -11,6 +11,7 @@ default:
   - sf
   - topographer
   - terra
+  - viridis
  extdata:  
    dem: '1sDKyVFypWFk0BbTe43PTuDv007XycZ23'
    siteindex: '1KPpaiTZSfrq0RYMJQwNdwgCU-4rWucheW5KUN_maERs'
