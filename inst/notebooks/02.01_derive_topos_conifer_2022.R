@@ -1,4 +1,4 @@
-# vDerive topo values for 2022 additions to network of conifer plots
+# Derive topo values for 2022 additions to network of conifer plots
 # Calculates the values of various topographic factors for rectangular 40x40 m neighborhoods around specified coordinates and/or within the extents of forest inventory plots in the East River watershed.
 # Author: Marshall Worsham
 # Created: 10-06-20
@@ -14,11 +14,17 @@ load.pkgs(config$pkgs)
 #### Ingest data ####
 
 # Ingest 2021 Kueppers plot characteristics CSVs
-tmpfile <- drive_download(as_id(config$extdata$siteindex), tempfile())$local_path
-siteinfo.ext <- as.data.frame(read_excel(tmpfile))
+tmpfile <- drive_download(
+  as_id(config$extdata$siteindex),
+  type='csv',
+  tempfile())$local_path
+siteinfo.ext <- as.data.frame(read.csv(tmpfile))
 
 # Ingest 2022 proposed site info
-tmpfile <- drive_download(config$extdata$siteinfo22, tempfile())$local_path
+tmpfile <- drive_download(
+  config$extdata$siteinfo22,
+  type='csv',
+  tempfile())$local_path
 siteinfo.22 <- read.csv(tmpfile, header=T)
 
 #### Process and clean data ####

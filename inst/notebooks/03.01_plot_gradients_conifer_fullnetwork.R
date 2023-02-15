@@ -14,8 +14,11 @@ devtools::load_all()
 load.pkgs(config$pkgs)
 
 # Ingest 2020 Kueppers plot characteristics CSVs
-tmpfile <- drive_download(as_id(config$extdata$siteindex), tempfile())$local_path
-siteinfo <- read_excel(tmpfile)
+tmpfile <- drive_download(
+  as_id(config$extdata$siteindex),
+  type='csv',
+  tempfile())$local_path
+siteinfo <- read.csv(tmpfile)
 
 # Select variables of interest from 2021 site info
 topos <- siteinfo[c(

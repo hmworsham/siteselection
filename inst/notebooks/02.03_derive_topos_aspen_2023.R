@@ -12,12 +12,18 @@ devtools::load_all()
 load.pkgs(config$pkgs)
 
 # Ingest aspen site info
-asp <- drive_download(as_id(config$extdata$asp), tempfile())$local_path
+asp <- drive_download(
+  as_id(config$extdata$asp),
+  type='csv',
+  tempfile())$local_path
 asp <- read.csv(asp)
 head(asp)
 
 # Ingest cored aspen info
-asp.cored <- drive_download(as_id(config$extdata$aspcored), tempfile())$local_path
+asp.cored <- drive_download(
+  as_id(config$extdata$aspcored),
+  type='csv',
+  tempfile())$local_path
 asp.cored <- read.csv(asp.cored)
 head(asp.cored)
 

@@ -12,8 +12,11 @@ devtools::load_all()
 load.pkgs(config$pkgs)
 
 # Ingest index with extant conifer plot characteristics
-tmpfile <- drive_download(as_id(config$extdata$siteindex), tempfile())$local_path
-siteinfo.ext <- as.data.frame(read_excel(tmpfile))
+tmpfile <- drive_download(
+  as_id(config$extdata$siteindex),
+  type='csv',
+  tempfile())$local_path
+siteinfo.ext <- as.data.frame(read.csv(tmpfile))
 coords.ext <- siteinfo.ext[,c('Location_ID', 'Latitude', 'Longitude')]
 
 # Specify topographic factors of interest

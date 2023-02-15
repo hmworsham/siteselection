@@ -13,7 +13,7 @@ config <- config::get(file=file.path('config', 'config.yml'))
 devtools::load_all()
 load.pkgs(config$pkgs)
 
-# Ingest 2020 Kueppers plot characteristics CSVs
+# Ingest 2020 Kueppers plot characteristics CSVs from local data dir
 asp <- file.path(config$dat_pro, 'aspen_zonals_2023.csv')
 asp <- read.csv(asp, row.names=1)
 

@@ -12,7 +12,10 @@ devtools::load_all()
 load.pkgs(config$pkgs)
 
 # Ingest Berkelhammer coordinates
-berk <- drive_download('SapSites.csv', tempfile())$local_path
+berk <- drive_download(
+  config$extdata$sap,
+  type='csv',
+  tempfile())$local_path
 berk <- read.csv(berk)
 berk.coords <- berk %>%
   group_by(site..) %>%
