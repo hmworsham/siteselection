@@ -5,9 +5,7 @@ default:
  pkgs:
   - tidyverse
   - googledrive
-  - ggplot2
   - ggpmisc
-  - readxl
   - sf
   - topographer
   - terra
@@ -23,6 +21,9 @@ default:
  dat_raw: './data/raw'
  dat_int: './data/intermediate'
  dat_pro: './data/processed'
+ dat_merged: './data/intermediate/GPS_Data_Merged_2021'
+ dat_stemgeo: './data/processed/Kueppers_EastRiver_Stem_Geolocations_WGS84UTM13N'
+ dat_invstems: './data/processed/CleanInvLatLon'
 
 test:
   key1: test
