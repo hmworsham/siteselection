@@ -1,18 +1,18 @@
-# site-selection
+# siteselection
 
-The repository **site-selection** contains R functions, scripts, and notebooks used for site selection for ecological studies. The material was originally developed for state-factor type (Amundson and Jenny 1997) approaches to choosing forest demography plots in Colorado's East River watershed, though the functions are generalizable to other domains. The repo is structured as an R package for portability. Reproducing the enclosed analyses is simply a matter of installing the package, providing Google Auth credentials to access publicly accessible input data, and running the notebooks. 
+The repository **siteselection** contains R functions, scripts, and notebooks used for site selection for ecological studies. The material was originally developed for state-factor type (Amundson and Jenny 1997) approaches to choosing forest demography plots in Colorado's East River watershed, though the functions are generalizable to other domains. The repo is structured as an R package for portability. Reproducing the enclosed analyses is simply a matter of installing the package, providing Google Auth credentials to access publicly accessible input data, and running the notebooks. 
 
 ## Installing
 
-**site-selection** can be installed by calling `remotes::install_github`:
+**siteselection** can be installed by calling `remotes::install_github`:
 
 ```
-remotes::install_github('hmworsham/site-selection')
+remotes::install_github('hmworsham/siteselection')
 ```
 
 ## Reproducing analyses
 
-1. Optionally, open `site-selection.Rproj` in RStudio to spin up a contained workspace.
+1. Optionally, open `siteselection.Rproj` in RStudio to spin up a contained workspace.
 2. Run `make ./Makefile` to ingest and clean data. Runs `./inst/notebooks/01_create_rasters`. 
 3. Enter Google Auth credentials when prompted. See [`drive_auth()`](https://googledrive.tidyverse.org/reference/drive_auth.html) documentation for details. 
 4. Run `R CMD BATCH ./inst/notebooks/<notebook.R>.` or, optionally, open notebooks from the directory in RStudio to run interactively. 
@@ -60,7 +60,7 @@ The repository has the following structure:
 
 ## Functions
 
-| `site-selection` function     | Source                       | Description                                               |
+| `siteselection` function     | Source                       | Description                                               |
 |:-----------------------------|:-----------------------------|:----------------------------------------------------------|
 | `load.pkgs`                  | ./R/helpers.R                | Load list of packages specified in `config.yml`, installing first if necessary  |
 | `makepolys`                  | ./R/helpers.R                | Build rectangular or circular polygons of specified radius around specified coordinates  |
