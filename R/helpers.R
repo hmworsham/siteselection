@@ -1,4 +1,11 @@
-# Function to install new packages if they're not already installed
+# Site selection helpers
+
+#' Load packages
+#' @description Loads new packages, installing if they're not already installed
+#' @param pkg Character string. Package name
+#' @return NULL. Loads packages in global environment
+#' @export load.pkgs
+#'
 load.pkgs <- function(pkg){
   new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
   if (length(new.pkg))
@@ -6,8 +13,15 @@ load.pkgs <- function(pkg){
   sapply(pkg, require, character.only = TRUE)
 }
 
+#' Make polygons
+#' @description Creates polygons from input coordinates, radius, and CRS
+#' @param input Dataframe. Should specify site ID, latitude, and longitude
+#' @param radius Numeric. Desired radius of output polygon
+#' @param shape Character string. One of 'rectangle' or 'circle'. Default is 'rectangle'
+#' @param target.crs Numeric. Desired output CRS in the form of a numeric EPSG code
+#' @return sf object containing polygons
+#' @export makepolys
 
-# Function to make polygons
 makepolys <- function(input, radius, shape='rectangle', target.crs=32613){
   xy = input[,c(2,3)]
   xy = st_as_sf(xy, coords=c('Longitude', 'Latitude'), crs=4326)

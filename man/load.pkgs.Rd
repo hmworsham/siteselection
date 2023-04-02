@@ -2,16 +2,16 @@
 % Please edit documentation in R/helpers.R
 \name{load.pkgs}
 \alias{load.pkgs}
-\title{Make polygons}
+\title{Load packages}
 \usage{
 load.pkgs(pkg)
 }
 \arguments{
-\item{pkg}{Character string. Name of package}
+\item{pkg}{Character string. Package name}
 }
 \value{
-NULL. Loads packages into global environment
+NULL. Loads packages in global environment
 }
 \description{
-Function to install new packages if they're not already installed
+Loads new packages, installing if they're not already installed
 }

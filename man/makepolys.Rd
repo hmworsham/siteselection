@@ -7,17 +7,17 @@
 makepolys(input, radius, shape = "rectangle", target.crs = 32613)
 }
 \arguments{
-\item{input}{Dataframe. Input dataframe containing latitude and longitude information}
+\item{input}{Dataframe. Should specify site ID, latitude, and longitude}
 
-\item{radius}{Numeric. Radius of desired polygon around input point}
+\item{radius}{Numeric. Desired radius of output polygon}
 
-\item{shape}{Character string. Either 'rectangle' or 'circle'. Default is 'rectangle'}
+\item{shape}{Character string. One of 'rectangle' or 'circle'. Default is 'rectangle'}
 
-\item{target.crs}{Numeric. Target CRS for output as a numeric EPSG code}
+\item{target.crs}{Numeric. Desired output CRS in the form of a numeric EPSG code}
 }
 \value{
-Geospatial dataframe object
+sf object containing polygons
 }
 \description{
-Generates polygons based on input coordinates, radius, and CRS
+Creates polygons from input coordinates, radius, and CRS
 }

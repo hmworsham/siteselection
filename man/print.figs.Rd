@@ -2,12 +2,26 @@
 % Please edit documentation in R/helpers.R
 \name{print.figs}
 \alias{print.figs}
-\title{''
-''}
+\title{Print figures}
 \usage{
-\method{print}{figs}(df, outdir)
+\method{print}{figs}(
+  df,
+  factor.var,
+  pal = NULL,
+  col.on = NULL,
+  outdir,
+  dims = c(1280, 900),
+  reso = 300
+)
+}
+\arguments{
+\item{df}{Dataframe object. Input dataframe for plotting}
+
+\item{outdir}{Character string. Destination directory for writing png}
+}
+\value{
+NULL. Writes to file
 }
 \description{
-''
-''
+Generates figures with ggplot and writes to png
 }
