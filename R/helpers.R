@@ -43,34 +43,28 @@ makepolys <- function(input, radius, shape='rectangle', target.crs=32613){
 #' @return NULL. Writes to file
 
 print.figs <- function(df,
-                        factor.var,
-                        pal=NULL,
-                        col.on=NULL,
-                        outdir,
-                        dims=c(1280,900),
-                        reso=300){
+                       factor.var=NULL,
+                       pal=NULL,
+                       outdir,
+                       dims=c(1280,900),
+                       reso=300){
 
-  # Create outdir if not exists
+  # Create outdir if it doesn't exist
   dir.create(file.path('.', outdir), showWarnings = FALSE)
 
-  # Set topo variables
-  df <- data.frame(
-    Location_ID=df$Location_ID,
-    df %>% select_if(is.numeric))
-
-  if (!missing(factor.var)) {
-    df$Factor_Var <- df[,factor.var]
-    df$Factor_Var <- factor(df$Factor_Var, levels=c('T', 'F'))
+  # # Deal with factor var
+  if (!is.null(factor.var)) {
+    df$Factor_Var <- factor(df[,factor.var], levels=c('TRUE', 'FALSE'))
   }
 
   # Generate plot for each topo variable
-  for (t in seq(3, length(df))) {
+  for (t in seq(6, length(df))) {
 
     # Define plot name for saving
     plotname <- paste0(names(df)[t], '.png') #name file
 
     # Select colors
-    clr <- pal[t-2]
+    clr <- pal[t-5]
 
     # Calculate 1:1 line coefficients
     i1 <- round(min(df[ , t])-(max(df[ , t])-min(df[ , t]))/(nrow(df)-1), 2)
@@ -81,11 +75,11 @@ print.figs <- function(df,
     ggp <- ggplot(df, aes(x = reorder(Location_ID,  df[, t]), y = df[, t]))
 
     # Conditional color handling
-    if (missing(col.on)) {
+    if (!is.null(factor.var)) {
       ggp <- ggp + geom_point(aes(fill=Factor_Var), size=5, shape=21)
-      if (missing(pal)) {
+      if (is.null(pal)) {
         ggp <- ggp + scale_fill_manual(
-          values=c('red2', 'navyblue'),
+          values=c('red2', 'grey70'),
           name=factor.var)
       } else {
         ggp <- ggp + scale_fill_manual(
@@ -93,8 +87,14 @@ print.figs <- function(df,
           name=factor.var)
       }
     } else {
-      ggp <- ggp + geom_point(aes(fill=df[ , col.on]), size=5, shape=21)
-      ggp <- ggp + scale_fill_viridis(name=col.on)
+      if(is.null(pal)) {
+        brks <- c(min(df$Elevation_m), max(df$Elevation_m))
+        ggp <- ggp +
+          geom_point(aes(fill=Elevation_m), size=5, shape=21) +
+          scale_fill_continuous(type='viridis', breaks=brks, name='Elevation (m a.s.l.)')
+      } else {
+        ggp <- ggp + geom_point(size=5, shape=21, fill=clr)
+      }
     }
 
     ggp <- ggp +
@@ -138,13 +138,13 @@ print.figs <- function(df,
         size = 5) +
 
       # Formatting
-      scale_y_continuous(name = names(df)[t]) +
-      labs(x = 'Plot ID', y = names(df)[t]) +
+      scale_y_continuous(name = str_replace_all(names(df)[t], '_', ' ')) +
+      labs(x = 'Plot ID', y = str_replace_all(names(df)[t], '_', ' ')) +
       theme_light(base_size = 20) +
       theme(axis.text.x = element_text(angle = 90, hjust = 1),
-            legend.position='bottom')
+            legend.position='bottom',
+            legend.title=element_text(size=18, vjust=1))
 
-    # Print plot
     png(
       file.path(outdir, plotname),
       width = dims[1],
