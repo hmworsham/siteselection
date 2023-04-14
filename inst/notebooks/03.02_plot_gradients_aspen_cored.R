@@ -64,8 +64,8 @@ colors = c("#3B9AB2",
 out.dir <- file.path('inst', 'reports', 'figs', 'aspen')
 print.figs(
   topos,
-  col.on='dem_100m',
-  pal=colors,
+  factor.var=NULL,
+  pal=NULL,
   outdir=out.dir,
   dims=c(2560,1920),
   reso=300)
