@@ -35,16 +35,15 @@ topos <- siteinfo[c(
   'Southness_205',
   'TWI_100',
   'TWI_1000',
-  'TPI_1000',
+  'TPI_1000'
 )]
 
 # Make df of topo variables
 topos <- as.data.frame(topos)
-
+head(topos)
 # Specify which plots to exclude
 # outs <- c()
 # topos <- topos[!topos$Site_ID %in% outs, ]
-# topos <- topos[topos$Established == 'Established', ]
 
 # Subset only established sites
 # topos_est <- topos[topos$Established == T]
@@ -70,15 +69,14 @@ colors = c("#3B9AB2",
            "#2A2A2A")
 
 # Print figures to png
-out.dir <- file.path('inst', 'reports', 'figs')
+out.dir <- file.path('inst', 'ms', 'figs' , 'by_elevation')
 print.figs(
   topos,
-  'Sensors',
-  pal=colors,
+  factor.var=NULL,
+  pal=NULL,
   outdir=out.dir,
   dims=c(2560,1920),
   reso=300)
-
 
 #### Facet grid all variables ####
 
