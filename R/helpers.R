@@ -54,17 +54,20 @@ print.figs <- function(df,
 
   # # Deal with factor var
   if (!is.null(factor.var)) {
+    if (length(unique(df[,factor.var]))==2) {
     df$Factor_Var <- factor(df[,factor.var], levels=c('TRUE', 'FALSE'))
+    } else
+      df$Factor_Var <- factor(df[,factor.var])
   }
 
   # Generate plot for each topo variable
-  for (t in seq(6, length(df))) {
+  for (t in seq(7, length(df)-1)) {
 
     # Define plot name for saving
     plotname <- paste0(names(df)[t], '.png') #name file
 
     # Select colors
-    clr <- pal[t-5]
+    clr <- pal[t-6]
 
     # Calculate 1:1 line coefficients
     i1 <- round(min(df[ , t])-(max(df[ , t])-min(df[ , t]))/(nrow(df)-1), 2)
@@ -77,7 +80,12 @@ print.figs <- function(df,
     # Conditional color handling
     if (!is.null(factor.var)) {
       ggp <- ggp + geom_point(aes(fill=Factor_Var), size=5, shape=21)
-      if (is.null(pal)) {
+      print(length(unique(df$Factor_Var)))
+      if(length(unique(df$Factor_Var)) > 2) {
+        ggp <- ggp + scale_fill_brewer(
+          palette='RdYlBu',
+          name=factor.var)
+      } else if (is.null(pal)) {
         ggp <- ggp + scale_fill_manual(
           values=c('red2', 'grey70'),
           name=factor.var)
