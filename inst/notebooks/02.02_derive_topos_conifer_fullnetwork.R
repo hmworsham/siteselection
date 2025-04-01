@@ -10,6 +10,7 @@ config <- config::get(file=file.path('config', 'config.yml'))
 # Load packages and local functions
 devtools::load_all()
 load.pkgs(config$pkgs)
+drive_auth(path=config$drivesa)
 
 # Ingest index with extant conifer plot characteristics
 tmpfile <- drive_download(

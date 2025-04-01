@@ -24,7 +24,7 @@ default:
  dat_merged: './data/intermediate/GPS_Data_Merged_2021'
  dat_stemgeo: './data/processed/Kueppers_EastRiver_Stem_Geolocations_WGS84UTM13N'
  dat_invstems: './data/processed/CleanInvLatLon'
-
+ drivesa: "~/.ssh/eastriver-308601-65de0446573f.json"
 test:
   key1: test
 

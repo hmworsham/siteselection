@@ -88,6 +88,7 @@ kplots_long <- kplots %>%
   pivot_longer(cols = Elevation_m:TPI_1000,
                names_to = 'variable') %>%
   arrange(variable, Location_ID)
+
 kplots_long <- kplots_long %>%
   mutate(Elevation = as.numeric(
     flatten(
@@ -102,10 +103,15 @@ kplots_long <- kplots_long %>%
 
 locids <- function(x) sub("[^_]*_","",x )
 
+vars.labs <- c('Elevation (m)', 'Folded aspect', 'Heat load',
+               'Slope (º)', 'TPI', 'TWI')
+names(vars.labs) <- unique(kplots_long$variable)
+
 # Set up facet grid with all variables
 varsgrid <- ggplot(kplots_long, aes(x = reorder(LIO, Order), y = value)) +
-  geom_point(aes(fill = Elevation, size = 1), shape = 21) +
-  scale_fill_viridis_c(name = 'Elevation') +
+  geom_point(aes(size=1), shape=21, fill='grey50') +
+  # geom_point(aes(fill = Elevation, size = 1), shape = 21) +
+  # scale_fill_viridis_c(name = 'Elevation') +
   scale_x_discrete(labels = locids) +
   geom_smooth(
     aes(x = Order, y = value),
@@ -113,41 +119,27 @@ varsgrid <- ggplot(kplots_long, aes(x = reorder(LIO, Order), y = value)) +
     se = FALSE,
     color = 'black'
   ) +
-  stat_poly_eq(
-    aes(
-      x = Order,
-      y = value,
-      label = paste(after_stat(eq.label), sep = "~~~")
-    ),
-    label.x.npc = "right",
-    label.y.npc = 0.15,
-    eq.with.lhs = "italic(hat(y))~`=`~",
-    eq.x.rhs = "~italic(x)",
-    formula = y ~ x,
-    parse = TRUE,
-    size = 3
-  ) +
-  stat_poly_eq(
-    aes(
-      x = Order,
-      y = value,
-      label = paste(after_stat(rr.label), sep = "~~~")
-    ),
-    label.x.npc = "right",
-    label.y.npc = "bottom",
-    formula = y ~ x,
-    parse = TRUE,
-    size = 3
-  ) +
-  facet_wrap( ~ variable, scales = 'free') +
+  # stat_poly_eq(
+  #   aes(
+  #     x = Order,
+  #     y = value,
+  #     label = paste(after_stat(eq.label), sep = "~~~")
+  #   ),
+  #   eq.with.lhs = "italic(hat(y))~`=`~",
+  #   eq.x.rhs = "~italic(x)",
+  #   formula = y ~ x,
+  #   parse = TRUE,
+  #   size = 3
+  # ) +
+  facet_wrap( ~ variable, scales = 'free', labeller=labeller(variable=vars.labs)) +
   labs(x = 'Site', y = 'Value') +
   guides(color = 'none', fill = 'none', size = 'none') +
+  theme_classic(base_size=12) +
   theme(
     axis.text.x = element_text(
       size = 9,
-      angle = 90,
-      hjust = 1,
-      vjust = 0.5
+      angle = 70,
+      hjust = 1
     ),
     axis.title = element_text()
   )
